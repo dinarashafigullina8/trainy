@@ -21,8 +21,8 @@ class Applicant(models.Model):
         return self.name
     
     class Meta:
-        verbose_name = 'Application'
-        verbose_name_plural = 'Applications'
+        verbose_name = 'Заявитель'
+        verbose_name_plural = 'Заявители'
         ordering = ('name',)
 
 
@@ -44,8 +44,8 @@ class Emergency(models.Model):
 
 
     class Meta:
-        verbose_name = 'Emergency'
-        verbose_name_plural = 'Emergencies'
+        verbose_name = 'Экстренная служба'
+        verbose_name_plural = 'Экстренные службы'
         ordering = ('code',)
 
       
@@ -72,8 +72,8 @@ class Appeal(models.Model):
 
     
     class Meta:
-        verbose_name = 'Appeal'
-        verbose_name_plural = 'Appeals'
+        verbose_name = 'Обращение'
+        verbose_name_plural = 'Обращения'
         ordering = ('date', 'number')
 
 
