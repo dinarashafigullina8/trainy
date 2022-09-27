@@ -16,6 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from core.views import *
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('incidents/', number_of_incidents),
+    path('telephone/<str:id>/', ApplicantDetail.as_view()),
+    path('inf/', inf),
+    path('applic/', applic_dict),
+    path('applicJ/', applic_json)
 ]
