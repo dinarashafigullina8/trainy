@@ -1,6 +1,4 @@
-from re import A
 from django.contrib import admin
-
 from core.models import *
 
 class ApplicantAdmin(admin.ModelAdmin):
@@ -17,7 +15,7 @@ class EmergencyAdmin(admin.ModelAdmin):
     empty_value_display = '*'
 
 class AppealAdmin(admin.ModelAdmin):
-    list_display = ('date', 'status','number_of_victims', 'dont_call')
+    list_display = ('date', 'number', 'status','number_of_victims', 'dont_call')
     list_editable = ('status', 'dont_call')
     search_fields = ('status',)
     list_filter = ('status','dont_call')

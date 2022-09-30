@@ -62,7 +62,7 @@ class Appeal(models.Model):
     application = models.ForeignKey(Applicant, on_delete=models.CASCADE, related_name='Appeal', verbose_name='Обращение')
     emergency = models.ManyToManyField(Emergency, related_name='Appeal', verbose_name='Экстренная служба')
     date = models.DateField(auto_now_add=True, verbose_name='Дата обращения')
-    number = models.IntegerField(db_index=True,editable=False, unique=True, verbose_name='Номер обращения')
+    number = models.IntegerField(db_index=True,editable=True, unique=True, verbose_name='Номер обращения')
     status = models.CharField(max_length=255,choices=status_choices, default='В работе', verbose_name='Статус')
     number_of_victims = models.IntegerField(default=0, verbose_name='Количество обращений')
     dont_call = models.BooleanField(default=False, verbose_name='Не звонить?')
