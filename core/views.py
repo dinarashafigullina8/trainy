@@ -1,25 +1,23 @@
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponse, Http404, JsonResponse
+from django.shortcuts import get_object_or_404, get_list_or_404
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from core.models import *
-from django.views.generic import View
-from django.shortcuts import redirect
 from django.forms.models import model_to_dict 
 
 
 def number_of_incidents(request):
-    incident = Appeal.objects.count()
-    if incident == 0:
-        raise Http404("Происшествий нет")
-    return HttpResponse("Количество происшествий - %s" % incident)
+    incident = get_list_or_404(Appeal.objects)
+    return HttpResponse("Количество происшествий - %s" % len(incident))
 
 
 
-class ApplicantDetail(View):
-    def get(self, request, id):
-        if int(id) > Applicant.objects.count():
-            return redirect('/incidents/', permanent=False)
-        telephone = get_object_or_404(Applicant.objects.values_list('telephone',), id__iexact=id)
-        return HttpResponse(telephone)
+def telephone(request,id):
+    telephone = get_object_or_404(Applicant.objects.values_list('telephone',), id__iexact=id)
+    return HttpResponse(telephone)
+
+
+def redirected(request,id):
+    return HttpResponseRedirect('/incidents/')
+
 
 def inf(request):
     if request.GET:
@@ -27,16 +25,14 @@ def inf(request):
 
 
 def applic_dict(request):
-    tel = int(request.GET.dict()['tel'])
+    tel = int(request.GET.get('tel'))
     applicant = Applicant.objects.filter(telephone=tel).values()
     return HttpResponse(applicant)
 
-def applic_json(request):
-    tel = int(request.GET.dict()['tel'])
-    applicant = Applicant.objects.filter(telephone=tel).values()
-    applicant = list(applicant)
-    applicant = JsonResponse(applicant, safe=False)
-    return HttpResponse(applicant.content)
+def applic_json(request,id):
+    applicant = get_object_or_404(Applicant, id=id)
+    data = model_to_dict(applicant, exclude='image')
+    return JsonResponse(data)
 
 
     
