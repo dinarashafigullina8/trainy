@@ -1,0 +1,52 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h1> {{title}}</h1>
+<table>
+    <tr>
+      <th>Номер обращения</th>
+      <th>Дата обращения</th>
+      <th>Количество пострадавших</th>
+      <th>Звонить?</th>
+      <th>Статус</th>
+    </tr>
+    <tr>
+        <th>
+            <ul>
+                {% for a in appeals %}
+                <h4> {{a.number}}</h4>
+                {% endfor %}
+            </ul>
+        </th>
+        <th>
+            <ul>
+                {% for a in appeals %}
+                <h4> {{a.date}}</h4>
+                {% endfor %}
+            </ul>
+        </th>
+        <th>
+            <ul>
+                {% for a in appeals %}
+                <h4> {{a.number_of_victims}}</h4>
+                {% endfor %}
+            </ul>
+        </th>
+        <th>
+            <ul>
+                {% for a in appeals %}
+                <h4> {{a.dont_call}}</h4>
+                {% endfor %}
+            </ul>
+        </th>
+        <th>
+            <ul>
+                {% for a in appeals %}
+                <h4> {{a.status}}</h4>
+                {% endfor %}
+            </ul>
+    </th>
+    </tr>
+</table>
+
+{% endblock %}

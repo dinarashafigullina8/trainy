@@ -1,0 +1,53 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h1> {{title}}</h1>
+<table>
+    <tr>
+      <th>Имя</th>
+      <th>Пол</th>
+      <th>Дата рождения</th>
+      <th>Телефон</th>
+      <th>Состояние</th>
+    </tr>
+    <tr>
+        <th>
+            <ul>
+                {% for a in applicants %}
+                <h4> {{a.name}}</h4>
+                {% endfor %}
+            </ul>
+        </th>
+        <th>
+            <ul>
+                {% for a in applicants %}
+                <h4> {{a.gender}}</h4>
+                {% endfor %}
+            </ul>
+        </th>
+        <th>
+            <ul>
+                {% for a in applicants %}
+                <h4> {{a.birth}}</h4>
+                {% endfor %}
+            </ul>
+        </th>
+        <th>
+            <ul>
+                {% for a in applicants %}
+                <h4> {{a.telephone}}</h4>
+                {% endfor %}
+            </ul>
+        </th>
+        <th>
+            <ul>
+                {% for a in applicants %}
+                <h4> {{a.health}}</h4>
+                {% endfor %}
+            </ul>
+        </th>
+
+    </tr>
+</table>
+
+{% endblock %}
