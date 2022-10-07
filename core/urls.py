@@ -13,5 +13,7 @@ urlpatterns = [
     path('applicJ/<int:pk>/', applic_json, name='applicJ'),
     path('appeal/', appeal, name='appeal'),
     path('emergency/', emergency, name='emergency'),
-    path('applicant/', applicant, name='applicant')
+    path('applicant/', applicant, name='applicant'),
+    path('a_list/', applicant_list, name='applicant_list'),
+    path('appeal_list/', appeal_list, name='appeal_list')
 ]

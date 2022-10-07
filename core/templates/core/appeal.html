@@ -1,7 +1,10 @@
 {% extends 'core/base.html' %}
 
+
 {% block content %}
+{% include "core/footer.html" %}
 <h1> {{title}}</h1>
+<h3> Среднее количество вызванных служб - {{avg_em.emergency__avg|floatformat}}</h3>
 <table>
     <tr>
       <th>Номер обращения</th>
@@ -9,6 +12,8 @@
       <th>Количество пострадавших</th>
       <th>Звонить?</th>
       <th>Статус</th>
+      <th>Вызванные службы</th>
+      <th> Время с обращения</th>
     </tr>
     <tr>
         <th>
@@ -21,7 +26,7 @@
         <th>
             <ul>
                 {% for a in appeals %}
-                <h4> {{a.date}}</h4>
+                <h4> {{a.date|date:"d.m.Y"}}</h4>
                 {% endfor %}
             </ul>
         </th>
@@ -35,7 +40,7 @@
         <th>
             <ul>
                 {% for a in appeals %}
-                <h4> {{a.dont_call}}</h4>
+                <h4> {{a.dont_call|yesno:"да,нет"}}</h4>
                 {% endfor %}
             </ul>
         </th>
@@ -45,8 +50,32 @@
                 <h4> {{a.status}}</h4>
                 {% endfor %}
             </ul>
-    </th>
+        </th>
+        <th>
+            <ul>
+                {% for a in appeals %}
+                {% for i in sublist %}
+        {% if a.number == i.0 %}
+        {% if i.1 != None %}
+        <div>{{a.number}} {{i.1|upper}}</div> 
+        {% else %}
+        <div>{{a.number}}Службы не назначены</div> 
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+
+                {% endfor %}
+            </ul>
+        </th>
+        <th>
+            <ul>
+                {% for a in appeals %}
+                <h4> {{a.date|timesince:now}}</h4>
+                {% endfor %}
+            </ul>
+        </th>
     </tr>
 </table>
+<h3> Количество обращений - {{count_appeal}}</h3>
 
 {% endblock %}

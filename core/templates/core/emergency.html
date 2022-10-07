@@ -1,6 +1,8 @@
 {% extends 'core/base.html' %}
 
+
 {% block content %}
+{% include "core/footer.html" %}
 <h1> {{title}}</h1>
 <table>
     <tr>
@@ -12,7 +14,7 @@
         <th>
             <ul>
                 {% for a in emergencies %}
-                <h4> {{a.name}}</h4>
+                <h4> {{a.name|upper}}</h4>
                 {% endfor %}
             </ul>
         </th>
