@@ -54,16 +54,12 @@
         <th>
             <ul>
                 {% for a in appeals %}
-                {% for i in sublist %}
-        {% if a.number == i.0 %}
-        {% if i.1 != None %}
-        <div>{{a.number}} {{i.1|upper}}</div> 
-        {% else %}
-        <div>{{a.number}}Службы не назначены</div> 
-        {% endif %}
-        {% endif %}
-        {% endfor %}
-
+                {% for i in a.emergency.all %}
+                    <h4>{{i|upper}}</h4> 
+                {% empty %}
+                    <h4>Службы не назначены</h4> 
+                {% endfor %}
+                <h4>--------------</h4>
                 {% endfor %}
             </ul>
         </th>
