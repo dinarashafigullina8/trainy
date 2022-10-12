@@ -1,0 +1,40 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+{% include "core/footer.html" %}
+<h1> {{title}}</h1>
+<table>
+    <tr>
+      <th>Название службы</th>
+      <th>Телефон</th>
+      <th>Код</th>
+    </tr>
+    <tr>
+        <th>
+            <ul>
+                {% for a in emergencies %}
+                <h4> {{a.name|upper}}</h4>
+                {% endfor %}
+            </ul>
+        </th>
+        <th>
+            <ul>
+                {% for a in emergencies %}
+                <h4> {{a.telephone}}</h4>
+                {% endfor %}
+            </ul>
+        </th>
+        <th>
+            <ul>
+                {% for a in emergencies %}
+                <h4> {{a.code}}</h4>
+                {% endfor %}
+            </ul>
+        </th>
+        
+
+    </tr>
+</table>
+
+{% endblock %}

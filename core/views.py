@@ -36,7 +36,11 @@ class Telephone(ListView):
     #     telephone = get_object_or_404(Applicant.objects.values_list('telephone',), id__iexact=pk)
     #     return HttpResponse(telephone)
 
-# class Redir(RedirectView):
+class Redir(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        article = get_object_or_404(Appeal, pk=kwargs['pk'])
+        article.update_
+        return super().get_redirect_url(*args, **kwargs)
     #def get(self,request,pk):
      #   return HttpResponseRedirect('/incidents/')
 

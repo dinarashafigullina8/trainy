@@ -1,0 +1,55 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+{% include "core/footer.html" %}
+<h1> {{title}}</h1>
+<table>
+    <tr>
+      <th>ФИО</th>
+      <th>Пол</th>
+      <th>Дата рождения</th>
+      <th>Телефон</th>
+      <th>Состояние</th>
+    </tr>
+    <tr>
+        <th>
+            <ul>
+                {% for a in applicants %}
+                <h4> {{a.name|title}}</h4>
+                {% endfor %}
+            </ul>
+        </th>
+        <th>
+            <ul>
+                {% for a in applicants %}
+                <h4> {{a.gender|default_if_none:"-"}}</h4>
+                {% endfor %}
+            </ul>
+        </th>
+        <th>
+            <ul>
+                {% for a in applicants %}
+                <h4> {{a.birth|default_if_none:"-"|date:"d.m.Y"}}</h4>
+                {% endfor %}
+            </ul>
+        </th>
+        <th>
+            <ul>
+                {% for a in applicants %}
+                <h4> {{a.telephone|default_if_none:"-"}}</h4>
+                {% endfor %}
+            </ul>
+        </th>
+        <th>
+            <ul>
+                {% for a in applicants %}
+                <h4> {{a.health|default_if_none:"-"}}</h4>
+                {% endfor %}
+            </ul>
+        </th>
+
+    </tr>
+</table>
+
+{% endblock %}

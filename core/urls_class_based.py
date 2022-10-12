@@ -1,13 +1,13 @@
 from django.urls import path
 
-from core.views import *
+from core.views.class_based import *
 
 app_name = 'core'
 urlpatterns = [
     path('', Index.as_view()),
     path('incidents/', NumberOfIncidents.as_view(), name='incidents'),
     path('telephone/<int:id>/', Telephone.as_view(), name='telephone'),
-    path('incidents/<int:pk>/', RedirectView.as_view(url='/incidents/'),name='redir'),
+    path('incidents/<int:pk>/', Redir.as_view,name='redir'),
     path('inf/', Inf.as_view(), name='inf'),
     path('applic/', ApplicDict.as_view(), name='applic'),
     path('applicJ/<int:pk>/', ApplicJSON.as_view(), name='applicJ'),

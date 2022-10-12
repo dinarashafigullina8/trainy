@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+{% include "core/footer.html" %}
+<h1> {{title}}</h1>
+<ul>
+    {% for a in appeal_list %}
+    <li>
+        <h2> {{a.number}}) {{a.date}}</h2>
+        {% for i in sublist %}
+        {% if a.number == i.0 %}
+        {% if i.1 != None %}
+        <div>{{i.1}}</div> 
+        {% else %}
+        <div>Службы не назначены</div> 
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
