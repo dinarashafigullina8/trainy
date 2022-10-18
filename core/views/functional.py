@@ -1,105 +1,148 @@
 import datetime
-from django.views.generic import View
-from django.shortcuts import get_object_or_404, get_list_or_404, render
+from django.shortcuts import get_object_or_404, get_list_or_404, render, redirect
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from core.models import *
+from core.forms import AddAppealForm
+from core.models import Appeal, Applicant, Emergency
 from django.forms.models import model_to_dict 
 from django.db.models import *
+from core.forms import AddAppealForm, AddApplicantForm, AddEmergencyForm
 
 
-
-def incidents(self, request):
+def incidents(request):
     incident = get_list_or_404(Appeal.objects)
     return HttpResponse("Количество происшествий - %s" % len(incident))
 
 
-
-def telephone(self,request,pk):
-    telephone = get_object_or_404(Applicant.objects.values_list('telephone',), id__iexact=pk)
+def telephone(self,id):
+    telephone = get_object_or_404(Applicant.objects.values_list('telephone',), id__iexact=id)
     return HttpResponse(telephone)
 
 
-def redirect(self,request,pk):
+def redir(self,pk):
     return HttpResponseRedirect('/incidents/')
 
 
-def inf(self, request):
+def inf(request):
     if request.GET:
         return HttpResponse(list(request.GET.dict().items()))
 
 
-def applic_dict(self,request):
+def applic_dict(request):
     tel = request.GET.get('tel')
     applicant = Applicant.objects.filter(telephone=tel).values()
     return HttpResponse(applicant)
 
 
-def applicJSON(self,request,pk):
+def applicJSON(request,pk):
     applicant = get_object_or_404(Applicant, id=pk)
     data = model_to_dict(applicant, exclude='image')
     return JsonResponse(data)
 
-def appeal(self, request):
+
+def appeal(request):
     appeals = Appeal.objects.all()
     avg_em = Appeal.objects.aggregate(Avg('emergency'))
     sublist = Appeal.objects.values_list('number', 'emergency__name')
     count_appeal = Appeal.objects.all().count()
     now = datetime.datetime.now()
     context = {
-    'title' : 'Обращения',
-    'appeals': appeals, 
-    'avg_em': avg_em,
-    'sublist': sublist,
-    'count_appeal': count_appeal,
-    'now' : now
+        'title' : 'Обращения',
+        'appeals': appeals, 
+        'avg_em': avg_em,
+        'sublist': sublist,
+        'count_appeal': count_appeal,
+        'n' : now
     }
-    return render(request, 'core/appeal.html', context=context)
+    return render(request, 'core/functional/appeal.html', context=context)
 
 
-def applicant(self, request):
+def applicant(request):
     applicants = Applicant.objects.all()
     context = {
-    'menu': menu,
-    'title': 'Заявители', 
-    'applicants': applicants
+        'title': 'Заявители', 
+        'applicants': applicants
     }
-    return render(request, 'core/application.html', context=context)
+    return render(request, 'core/functional/application.html', context=context)
 
 
-def emergency(self, request):
+def emergency(request):
     emergencies = Emergency.objects.all()
     context = {
-    'menu': menu,
-    'title':'Службы', 
-    'emergencies': emergencies
+        'title':'Службы', 
+        'emergencies': emergencies
     }
-    return render(request, 'core/emergency.html', context=context)    
+    return render(request, 'core/functional/emergency.html', context=context)    
 
-def index(self,request):
+
+def index(request):
     context = {
-    'title': 'Главная страница'
+        'title': 'Главная страница'
     }
-    return render(request,'core/index.html', context=context)
+    return render(request,'core/functional/index.html', context=context)
 
 
-def applicant_list(self,request):
+def applicant_list(request):
     applicants_list = Applicant.objects.all()
     context = {
-    'title': 'Список заявителей', 
-    'applicant_list': applicants_list
+        'title': 'Список заявителей', 
+        'applicant_list': applicants_list
     }
-    return render(request, 'core/applicant_list.html', context=context)
+    return render(request, 'core/functional/applicant_list.html', context=context)
 
 
-
-def appeal_list(self,request):
+def appeal_list(request):
     appeal_list = Appeal.objects.all()
     sublist = Appeal.objects.values_list('number', 'emergency__name')
     print(appeal_list)
     print(sublist)
     context = {
-    'title': 'Список происшествий', 
-    'appeal_list': appeal_list,
-    'sublist': sublist
+        'title': 'Список происшествий', 
+        'appeal_list': appeal_list,
+        'sublist': sublist
     } 
-    return render(request, 'core/appeal_list.html', context=context)
+    return render(request, 'core/functional/appeal_list.html', context=context)
+
+
+def add_appeal(request):
+    if request.method == 'POST':
+        form = AddAppealForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('http://127.0.0.1:8000/')
+    else:
+        form = AddAppealForm()
+    context = {
+        'form' : form,
+        'title' : 'Новое обращение'
+    }
+    return render(request, 'core/functional/add_appeal.html', context=context)
+
+
+def add_applicant(request):
+    if request.method == 'POST':
+        form = AddApplicantForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('http://127.0.0.1:8000/')
+    else:
+        form = AddApplicantForm()
+    context = {
+        'form' : form,
+        'title' : 'Новый заявитель'
+    }
+    return render(request, 'core/functional/add_applicant.html', context=context)
+
+
+def add_emergency(request):
+    if request.method == 'POST':
+        form = AddEmergencyForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('http://127.0.0.1:8000/')
+    else:
+        form = AddEmergencyForm()
+    context = {
+        'form' : form,
+        'title' : 'Новая служба'
+    }
+    return render(request, 'core/functional/add_emergency.html', context=context)

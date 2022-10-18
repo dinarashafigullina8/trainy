@@ -34,6 +34,7 @@ class Telephone(ListView):
 class Redir(RedirectView):
     pattern_name = 'core/class_based/:index'
 
+
 class Inf(View):
     def get(self, request):
         if request.GET:
@@ -45,11 +46,13 @@ class ApplicDict(View):
         applicant = Applicant.objects.filter(telephone=tel).values()
         return HttpResponse(applicant)
 
+
 class ApplicJSON(View):
     def get(self,request,pk):
         applicant = get_object_or_404(Applicant, id=pk)
         data = model_to_dict(applicant, exclude='image')
         return JsonResponse(data)
+
 
 class AppealView(ListView):
     model = Appeal
@@ -65,6 +68,7 @@ class AppealView(ListView):
         context['count_appeal'] = Appeal.objects.all().count()
         return context
 
+
 class ApplicantView(ListView):
     model = Applicant
     template_name = 'core/class_based/application.html'
@@ -74,6 +78,7 @@ class ApplicantView(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Заявители'
         return context
+
 
 class EmergencyView(ListView):
     model = Emergency
@@ -85,12 +90,14 @@ class EmergencyView(ListView):
         context['title'] = 'Службы'
         return context  
 
+
 class Index(TemplateView):
     template_name = 'core/class_based/index.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Главная страница'
         return context 
+
 
 class ApplicantList(ListView):
     model = Applicant
@@ -101,6 +108,7 @@ class ApplicantList(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Список заявителей'
         return context
+
 
 class AppealList(ListView):
     model = Appeal

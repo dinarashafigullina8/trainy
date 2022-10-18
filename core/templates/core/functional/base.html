@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{title}}</title>
+</head>
+<body>
+{% block mainmenu %}
+<ul>
+    <li><a href="{% url 'core:appeal'%}">Обращения</a></li>
+    <li><a href="{% url 'core:applicant'%}">Заявители</a></li>
+    <li><a href="{% url 'core:emergency'%}">Службы</a></li>
+    <li><a href="{% url 'core:add_appeal'%}">Новое обращение</a></li>
+    <li><a href="{% url 'core:add_applicant'%}">Новый заявитель</a></li>
+    <li><a href="{% url 'core:add_emergency'%}">Новая служба</a></li>
+</ul>
+{% endblock mainmenu %}
+{% block content %}
+{% endblock %}
+</body>
+</html>

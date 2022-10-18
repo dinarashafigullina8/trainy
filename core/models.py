@@ -42,13 +42,10 @@ class Emergency(models.Model):
     def __str__(self):
         return self.name 
 
-
     class Meta:
         verbose_name = 'Экстренная служба'
         verbose_name_plural = 'Экстренные службы'
         ordering = ('code',)
-
-      
 
 
 class Appeal(models.Model):
@@ -58,7 +55,6 @@ class Appeal(models.Model):
         (work, 'В работе'),
         (done, 'Завершено')
     ]
-
     application = models.ForeignKey(Applicant, on_delete=models.CASCADE, related_name='Appeal', verbose_name='Обращение')
     emergency = models.ManyToManyField(Emergency, related_name='Appeal', verbose_name='Экстренная служба')
     date = models.DateField(auto_now_add=True, verbose_name='Дата обращения')
@@ -70,7 +66,6 @@ class Appeal(models.Model):
     def __str__(self):
         return self.status
 
-    
     class Meta:
         verbose_name = 'Обращение'
         verbose_name_plural = 'Обращения'

@@ -1,0 +1,12 @@
+{% extends 'core/functional/base.html' %}
+
+
+{% block content %}
+{% include "core/functional/footer.html" %}
+<h1> {{title}}</h1>
+<form action="{% url 'core:add_emergency' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit"> Добавить</button>
+</form>
+{% endblock %}
