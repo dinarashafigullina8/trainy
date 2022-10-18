@@ -15,5 +15,8 @@ urlpatterns = [
     path('emergency/', EmergencyView.as_view(), name='emergency'),
     path('applicant/', ApplicantView.as_view(), name='applicant'),
     path('a_list/', ApplicantList.as_view(), name='applicant_list'),
-    path('appeal_list/', AppealList.as_view(), name='appeal_list')
+    path('appeal_list/', AppealList.as_view(), name='appeal_list'),
+    path('add_appeal/', AddAppeal.as_view(), name='add_appeal'),
+    path('add_applicant/', AddApplicant.as_view(), name='add_applicant'),
+    path('add_emergency/', AddEmergency.as_view(), name='add_emergency')
 ]

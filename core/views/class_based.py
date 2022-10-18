@@ -7,7 +7,8 @@ from core.models import *
 from django.forms.models import model_to_dict 
 from django.db.models import *
 from django.views.generic.base import RedirectView 
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, CreateView
+from core.forms import AddAppealForm, AddApplicantForm, AddEmergencyForm
 
 
 class NumberOfIncidents(ListView):
@@ -119,4 +120,45 @@ class AppealList(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Список происшествий'
         context['sublist'] = Appeal.objects.values_list('number', 'emergency__name')
+        return context
+
+
+class AddAppeal(CreateView):
+    form_class = AddAppealForm
+    template_name = 'core/class_based/add_appeal.html'
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Добавление обращения'
+        return context
+
+class AddApplicant(CreateView):
+    form_class = AddApplicantForm
+    template_name = 'core/class_based/add_applicant.html'
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+    
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Добавление заявителя'
+        return context
+
+
+class AddEmergency(CreateView):
+    form_class = AddEmergencyForm
+    template_name = 'core/class_based/add_emergency.html'
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Добавление службы'
         return context
