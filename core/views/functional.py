@@ -6,7 +6,7 @@ from core.models import Appeal, Applicant, Emergency
 from django.forms.models import model_to_dict 
 from django.db.models import *
 from core.forms import AddAppealForm, AddApplicantForm, AddEmergencyForm
-from core.filters import ApplicantFilter
+from core.filters import ApplicantFilter, AppealFilter
 
 def incidents(request):
     incident = get_list_or_404(Appeal.objects)
@@ -40,7 +40,10 @@ def applicJSON(request,pk):
 
 
 def appeal(request):
-    appeals = Appeal.objects.all()
+    if request.method == 'GET':
+        appeals = AppealFilter(request.GET, queryset = Appeal.objects.all())
+    else:
+        appeals = Appeal.objects.all()
     avg_em = Appeal.objects.aggregate(Avg('emergency'))
     sublist = Appeal.objects.values_list('number', 'emergency__name')
     count_appeal = Appeal.objects.all().count()
@@ -57,7 +60,10 @@ def appeal(request):
 
 
 def applicant(request):
-    applicants = Applicant.objects.all()
+    if request.method == 'GET':
+        applicants = ApplicantFilter(request.GET, queryset = Applicant.objects.all())
+    else:
+        applicants = Applicant.objects.all()
     context = {
         'title': 'Заявители', 
         'applicants': applicants
@@ -149,6 +155,6 @@ def add_emergency(request):
 
 
 
-def search_applicant(request):
-    f = ApplicantFilter(request.GET.name, queryset = Applicant.objects.all())
-    return HttpResponse('core/functional/applicant.html', {'filter': f})
+# def search_applicant(request):
+#     f = ApplicantFilter(request.GET, queryset = Applicant.objects.all())
+#     return HttpResponse('core/functional/applicant.html', {'filter': f})

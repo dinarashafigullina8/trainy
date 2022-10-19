@@ -51,6 +51,5 @@ class AddEmergencyForm(forms.ModelForm):
         }
 
     
-class ApplicantSearch(forms.Form):
-    name = forms.CharField(label='ФИО', required=False)
+
     

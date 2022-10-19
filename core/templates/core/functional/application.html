@@ -3,7 +3,14 @@
 
 {% block content %}
 {% include "core/functional/footer.html" %}
-{% include "core/functional/search_applicant.html" %}
+<form> 
+    <input type="text" name=name class="search" placeholder="Поиск по ФИО">
+    <input type="submit" name="submit" class="submit" value="Поиск">
+    <input type="text" name=telephone class="search" placeholder="Поиск по номеру телефона">
+    <input type="submit" name="submit" class="submit" value="Поиск">
+    <input type="text" name=birth class="search" placeholder="Поиск по году рождения">
+    <input type="submit" name="submit" class="submit" value="Поиск">
+  </form>
 <h1> {{title}}</h1>
 <table>
     <tr>
@@ -16,35 +23,35 @@
     <tr>
         <th>
             <ul>
-                {% for a in applicants %}
+                {% for a in applicants.qs %}
                 <h4> {{a.name|title}}</h4>
                 {% endfor %}
             </ul>
         </th>
         <th>
             <ul>
-                {% for a in applicants %}
+                {% for a in applicants.qs %}
                 <h4> {{a.gender|default_if_none:"-"}}</h4>
                 {% endfor %}
             </ul>
         </th>
         <th>
             <ul>
-                {% for a in applicants %}
+                {% for a in applicants.qs %}
                 <h4> {{a.birth|default_if_none:"-"|date:"d.m.Y"}}</h4>
                 {% endfor %}
             </ul>
         </th>
         <th>
             <ul>
-                {% for a in applicants %}
+                {% for a in applicants.qs %}
                 <h4> {{a.telephone|default_if_none:"-"}}</h4>
                 {% endfor %}
             </ul>
         </th>
         <th>
             <ul>
-                {% for a in applicants %}
+                {% for a in applicants.qs %}
                 <h4> {{a.health|default_if_none:"-"}}</h4>
                 {% endfor %}
             </ul>
