@@ -20,5 +20,5 @@ from core.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('core.urls_class_based', namespace='start')),
+    path('', include('core.urls_functional', namespace='start')),
 ]

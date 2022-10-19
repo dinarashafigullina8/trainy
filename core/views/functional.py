@@ -6,7 +6,7 @@ from core.models import Appeal, Applicant, Emergency
 from django.forms.models import model_to_dict 
 from django.db.models import *
 from core.forms import AddAppealForm, AddApplicantForm, AddEmergencyForm
-
+from core.filters import ApplicantFilter
 
 def incidents(request):
     incident = get_list_or_404(Appeal.objects)
@@ -108,7 +108,7 @@ def add_appeal(request):
         form = AddAppealForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('http://127.0.0.1:8000/')
+            return redirect('core:index')
     else:
         form = AddAppealForm()
     context = {
@@ -123,7 +123,7 @@ def add_applicant(request):
         form = AddApplicantForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('http://127.0.0.1:8000/')
+            return redirect('core:index')
     else:
         form = AddApplicantForm()
     context = {
@@ -138,7 +138,7 @@ def add_emergency(request):
         form = AddEmergencyForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('http://127.0.0.1:8000/')
+            return redirect('core:index')
     else:
         form = AddEmergencyForm()
     context = {
@@ -146,3 +146,9 @@ def add_emergency(request):
         'title' : 'Новая служба'
     }
     return render(request, 'core/functional/add_emergency.html', context=context)
+
+
+
+def search_applicant(request):
+    f = ApplicantFilter(request.GET.name, queryset = Applicant.objects.all())
+    return HttpResponse('core/functional/applicant.html', {'filter': f})

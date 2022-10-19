@@ -49,3 +49,8 @@ class AddEmergencyForm(forms.ModelForm):
         help_texts = {
             'code': 'Код должен состоять из 2 или 3 цифр'
         }
+
+    
+class ApplicantSearch(forms.Form):
+    name = forms.CharField(label='ФИО', required=False)
+    

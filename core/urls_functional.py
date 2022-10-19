@@ -4,7 +4,7 @@ from core.views.functional import *
 
 app_name = 'core'
 urlpatterns = [
-    path('', index),
+    path('', index, name='index'),
     path('incidents/', incidents, name='incidents'),
     path('telephone/<int:id>/', telephone, name='telephone'),
     path('incidents/<int:pk>/', redir,name='redir'),
@@ -18,5 +18,6 @@ urlpatterns = [
     path('appeal_list/', appeal_list, name='appeal_list'),
     path('add_appeal/', add_appeal, name='add_appeal'),
     path('add_applicant/', add_applicant, name='add_applicant'), 
-    path('add_emergency/', add_emergency, name='add_emergency')
+    path('add_emergency/', add_emergency, name='add_emergency'),
+    path('search_applicant/', search_applicant, name='search_applicant')
 ]

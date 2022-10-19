@@ -3,7 +3,7 @@ from multiprocessing import context
 from django.views.generic import View
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from core.models import *
+from core.models import Appeal, Applicant, Emergency
 from django.forms.models import model_to_dict 
 from django.db.models import *
 from django.views.generic.base import RedirectView 
