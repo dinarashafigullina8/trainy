@@ -1,5 +1,6 @@
 import datetime
 from multiprocessing import context
+from urllib import request
 from django.views.generic import View
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
@@ -57,12 +58,21 @@ class ApplicJSON(View):
 
 class AppealView(ListView):
     model = Appeal
-    
     template_name = 'core/class_based/appeal.html'
+
+    def get_queryset(self):  
+        query = self.request.GET.get('name')
+        if query:
+            return Appeal.objects.filter(name__icontains=query)
+        else:
+            return Appeal.objects.none() 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['filter'] = AppealFilter(self.request.GET, queryset = Appeal.objects.all())
+        if self.request.method == 'GET':
+            context['filter'] = AppealFilter(self.request.GET, queryset = Appeal.objects.all())
+        else:
+            context['filter'] = Appeal.objects.all()
         context['title'] = 'Обращения'
         context['n'] = datetime.datetime.now()
         context['avg_em'] = Appeal.objects.aggregate(Avg('emergency'))
@@ -76,7 +86,11 @@ class ApplicantView(ListView):
 
     def get_queryset(self):  
         query = self.request.GET.get('name')
-        return Applicant.objects.filter(name__icontains=query)
+        if query:
+            return Applicant.objects.filter(name__icontains=query)
+        else:
+            return Applicant.objects.none() 
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

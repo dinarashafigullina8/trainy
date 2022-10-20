@@ -26,42 +26,42 @@
     <tr>
         <th>
             <ul>
-                {% for a in appeals %}
+                {% for a in filter.qs %}
                 <h4> {{a.number}}</h4>
                 {% endfor %}
             </ul>
         </th>
         <th>
             <ul>
-                {% for a in appeals %}
+                {% for a in filter.qs %}
                 <h4> {{a.date|date:"d.m.Y"}}</h4>
                 {% endfor %}
             </ul>
         </th>
         <th>
             <ul>
-                {% for a in appeals %}
+                {% for a in filter.qs %}
                 <h4> {{a.number_of_victims}}</h4>
                 {% endfor %}
             </ul>
         </th>
         <th>
             <ul>
-                {% for a in appeals %}
+                {% for a in filter.qs %}
                 <h4> {{a.dont_call|yesno:"да,нет"}}</h4>
                 {% endfor %}
             </ul>
         </th>
         <th>
             <ul>
-                {% for a in appeals %}
+                {% for a in filter.qs %}
                 <h4> {{a.status}}</h4>
                 {% endfor %}
             </ul>
         </th>
         <th>
             <ul>
-                {% for a in appeals %}
+                {% for a in filter.qs %}
                 {% for i in a.emergency.all %}
                     <h4>{{i|upper}}</h4> 
                 {% empty %}
@@ -73,7 +73,7 @@
         </th>
         <th>
             <ul>
-                {% for a in appeals %}
+                {% for a in filter.qs %}
                 <h4> {{a.date|timesince:n}}</h4>
                 {% endfor %}
             </ul>

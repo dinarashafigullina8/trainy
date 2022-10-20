@@ -12,7 +12,7 @@ class AppealFilter(django_filters.FilterSet):
 class ApplicantFilter(django_filters.FilterSet):
     name = django_filters.CharFilter(field_name='name')
     telephone = django_filters.NumberFilter(field_name='telephone')
-    birth = django_filters.DateFilter(field_name='birth', lookup_expr='icontains')
+    birth = django_filters.DateFilter(field_name='birth', lookup_expr='year')
     class Meta:
         model = Applicant
         fields = ['name', 'telephone', 'birth']
