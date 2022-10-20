@@ -1,8 +1,16 @@
-{% extends 'core/base.html' %}
+{% extends 'core/class_based/base.html' %}
 
 
 {% block content %}
-{% include "core/footer.html" %}
+{% include "core/class_based/footer.html" %}
+<form> 
+    <input type="text" name=name class="search" placeholder="Поиск по ФИО">
+    <input type="submit" name="submit" class="submit" value="Поиск">
+    <input type="text" name=code class="search" placeholder="Поиск по коду">
+    <input type="submit" name="submit" class="submit" value="Поиск">
+    <input type="text" name=status class="search" placeholder="Поиск по статусу">
+    <input type="submit" name="submit" class="submit" value="Поиск">
+</form>
 <h1> {{title}}</h1>
 <h3> Среднее количество вызванных служб - {{avg_em.emergency__avg|floatformat}}</h3>
 <table>

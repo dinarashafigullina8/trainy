@@ -1,8 +1,16 @@
-{% extends 'core/base.html' %}
+{% extends 'core/class_based/base.html' %}
 
 
 {% block content %}
-{% include "core/footer.html" %}
+{% include "core/class_based/footer.html" %}
+<form> 
+    <input type="text" name=name class="search" placeholder="Поиск по ФИО">
+    <input type="submit" name="submit" class="submit" value="Поиск">
+    <input type="text" name=telephone class="search" placeholder="Поиск по номеру телефона">
+    <input type="submit" name="submit" class="submit" value="Поиск">
+    <input type="text" name=birth class="search" placeholder="Поиск по году рождения">
+    <input type="submit" name="submit" class="submit" value="Поиск">
+  </form>
 <h1> {{title}}</h1>
 <table>
     <tr>
@@ -15,35 +23,35 @@
     <tr>
         <th>
             <ul>
-                {% for a in applicants %}
+                {% for a in filter.qs %}
                 <h4> {{a.name|title}}</h4>
                 {% endfor %}
             </ul>
         </th>
         <th>
             <ul>
-                {% for a in applicants %}
+                {% for a in filter.qs %}
                 <h4> {{a.gender|default_if_none:"-"}}</h4>
                 {% endfor %}
             </ul>
         </th>
         <th>
             <ul>
-                {% for a in applicants %}
+                {% for a in filter.qs %}
                 <h4> {{a.birth|default_if_none:"-"|date:"d.m.Y"}}</h4>
                 {% endfor %}
             </ul>
         </th>
         <th>
             <ul>
-                {% for a in applicants %}
+                {% for a in filter.qs %}
                 <h4> {{a.telephone|default_if_none:"-"}}</h4>
                 {% endfor %}
             </ul>
         </th>
         <th>
             <ul>
-                {% for a in applicants %}
+                {% for a in filter.qs %}
                 <h4> {{a.health|default_if_none:"-"}}</h4>
                 {% endfor %}
             </ul>

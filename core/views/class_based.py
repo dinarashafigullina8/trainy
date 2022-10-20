@@ -9,7 +9,7 @@ from django.db.models import *
 from django.views.generic.base import RedirectView 
 from django.views.generic import ListView, TemplateView, CreateView
 from core.forms import AddAppealForm, AddApplicantForm, AddEmergencyForm
-
+from core.filters import ApplicantFilter, AppealFilter
 
 class NumberOfIncidents(ListView):
     model = Appeal
@@ -59,10 +59,10 @@ class AppealView(ListView):
     model = Appeal
     
     template_name = 'core/class_based/appeal.html'
-    context_object_name = 'appeals'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['filter'] = AppealFilter(self.request.GET, queryset = Appeal.objects.all())
         context['title'] = 'Обращения'
         context['n'] = datetime.datetime.now()
         context['avg_em'] = Appeal.objects.aggregate(Avg('emergency'))
@@ -73,10 +73,17 @@ class AppealView(ListView):
 class ApplicantView(ListView):
     model = Applicant
     template_name = 'core/class_based/application.html'
-    context_object_name = 'applicants'
+
+    def get_queryset(self):  
+        query = self.request.GET.get('name')
+        return Applicant.objects.filter(name__icontains=query)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        if self.request.method == 'GET':
+            context['filter'] = ApplicantFilter(self.request.GET, queryset = Applicant.objects.all())
+        else:
+            context['filter'] = Applicant.objects.all()
         context['title'] = 'Заявители'
         return context
 
