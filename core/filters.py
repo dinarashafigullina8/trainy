@@ -1,12 +1,6 @@
-from dataclasses import fields
-from email.mime import application
 import django_filters
 import django_filters.rest_framework
-from core.models import Appeal, Applicant, Emergency
-
-class AppealFilter(django_filters.FilterSet):
-    pass
-
+from core.models import Appeal, Applicant
 
 
 class ApplicantFilter(django_filters.FilterSet):

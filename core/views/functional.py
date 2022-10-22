@@ -60,6 +60,9 @@ def appeal(request):
 
 
 def applicant(request):
+    # applicants = User.objects.filter(
+    #     Q(first_name) | Q(last_name)
+    #     )
     if request.method == 'GET':
         applicants = ApplicantFilter(request.GET, queryset = Applicant.objects.all())
     else:

@@ -4,37 +4,25 @@
 {% block content %}
 {% include "core/footer.html" %}
 <h1> {{title}}</h1>
-<table>
-    <tr>
-      <th>Название службы</th>
-      <th>Телефон</th>
-      <th>Код</th>
-    </tr>
-    <tr>
-        <th>
-            <ul>
-                {% for a in emergencies %}
-                <h4> {{a.name|upper}}</h4>
-                {% endfor %}
-            </ul>
-        </th>
-        <th>
-            <ul>
-                {% for a in emergencies %}
-                <h4> {{a.telephone}}</h4>
-                {% endfor %}
-            </ul>
-        </th>
-        <th>
-            <ul>
-                {% for a in emergencies %}
-                <h4> {{a.code}}</h4>
-                {% endfor %}
-            </ul>
-        </th>
-        
-
-    </tr>
-</table>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Название службы</th>
+        <th scope="col">Телефон</th>
+        <th scope="col">Код</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for a in emergencies %}
+      <tr>
+        <th scope="row">{{a.name|upper}}</th>
+        <td>{{a.telephone}}</td>
+        <td>{{a.code}}</td>
+      </tr>
+      {% empty %}
+      <h4> Не найдено </h4>
+    {% endfor %}
+    </tbody>
+  </table>
 
 {% endblock %}

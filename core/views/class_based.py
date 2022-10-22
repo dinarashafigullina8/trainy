@@ -87,6 +87,9 @@ class ApplicantView(ListView):
     def get_queryset(self):  
         query = self.request.GET.get('name')
         if query:
+            # applicants = User.objects.filter(
+    #     Q(first_name) | Q(last_name)
+    #     )
             return Applicant.objects.filter(name__icontains=query)
         else:
             return Applicant.objects.none() 

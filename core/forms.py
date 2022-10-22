@@ -2,7 +2,7 @@ import datetime
 from xml.dom import ValidationErr
 from django import forms
 from core.models import Appeal,Applicant,Emergency
-
+from django.core.exceptions import ValidationError
 
 class AddAppealForm(forms.ModelForm):
     OPTIONS = (
@@ -33,8 +33,8 @@ class AddApplicantForm(forms.ModelForm):
 
     def  clean_telephone(self):
         telephone = self.cleaned_data['telephone']
-        if len(telephone) > 11:
-            raise ValidationErr('Длина номера телефона не может быть длинее 11 символов')
+        if len(str(telephone)) > 11:
+            raise ValidationError('Номер телефона не может быть длинее 11 символов')
         return telephone
 
 

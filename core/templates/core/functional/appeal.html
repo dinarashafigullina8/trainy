@@ -13,73 +13,39 @@
   </form>
 <h1> {{title}}</h1>
 <h3> Среднее количество вызванных служб - {{avg_em.emergency__avg|floatformat}}</h3>
-<table>
-    <tr>
-      <th>Номер обращения</th>
-      <th>Дата обращения</th>
-      <th>Количество пострадавших</th>
-      <th>Звонить?</th>
-      <th>Статус</th>
-      <th>Вызванные службы</th>
-      <th> Время с обращения</th>
-    </tr>
-    <tr>
-        <th>
-            <ul>
-                {% for a in appeals.qs %}
-                <h4> {{a.number}}</h4>
-                {% endfor %}
-            </ul>
-        </th>
-        <th>
-            <ul>
-                {% for a in appeals.qs %}
-                <h4> {{a.date|date:"d.m.Y"}}</h4>
-                {% endfor %}
-            </ul>
-        </th>
-        <th>
-            <ul>
-                {% for a in appeals.qs %}
-                <h4> {{a.number_of_victims}}</h4>
-                {% endfor %}
-            </ul>
-        </th>
-        <th>
-            <ul>
-                {% for a in appeals.qs %}
-                <h4> {{a.dont_call|yesno:"да,нет"}}</h4>
-                {% endfor %}
-            </ul>
-        </th>
-        <th>
-            <ul>
-                {% for a in appeals.qs %}
-                <h4> {{a.status}}</h4>
-                {% endfor %}
-            </ul>
-        </th>
-        <th>
-            <ul>
-                {% for a in appeals.qs %}
-                {% for i in a.emergency.all %}
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Номер обращения</th>
+        <th scope="col">Дата обращения</th>
+        <th scope="col">Количество пострадавших</th>
+        <th scope="col">Звонить?</th>
+        <th scope="col">Вызванные службы</th>
+        <th scope="col">Время с обращения</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for a in appeals.qs %}
+      <tr>
+        <th scope="row">{{a.number}}</th>
+        <td>{{ a.date|date:"d.m.Y"}}</td>
+        <td>{{ a.number_of_victims}}</td>
+        <td>{{ a.dont_call|yesno:"да,нет" }}</td>
+        <td>
+            {% for i in a.emergency.all %}
                     <h4>{{i|upper}}</h4> 
                 {% empty %}
                     <h4>Службы не назначены</h4> 
                 {% endfor %}
-                <h4>--------------</h4>
-                {% endfor %}
-            </ul>
-        </th>
-        <th>
-            <ul>
-                {% for a in appeals.qs %}
-                <h4> {{a.date|timesince:n}}</h4>
-                {% endfor %}
-            </ul>
-        </th>
-    </tr>
-</table>
+        </td>
+        <td>{{ a.date|timesince:n}}</td>
+
+      </tr>
+      {% empty %}
+      <h4> Не найдено </h4>
+    {% endfor %}
+    </tbody>
+  </table>
 <h3> Количество обращений - {{count_appeal}}</h3>
 
 {% endblock %}
